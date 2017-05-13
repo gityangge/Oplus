@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ac.yangge.dao.ItemDao">
+  <resultMap id="BaseResultMap" type="cn.ac.yangge.pojo.Item" >
+    <id column="itemID" property="itemID" jdbcType="DECIMAL" />
+    <result column="itemName" property="itemName" jdbcType="VARCHAR" />
+    <result column="itemType" property="itemType" jdbcType="DECIMAL" />
+    <result column="itemContext" property="itemContext" jdbcType="VARCHAR" />
+    <result column="itemLeader" property="itemLeader" jdbcType="VARCHAR" />
+    <result column="itemTeam" property="itemTeam" jdbcType="DECIMAL" />
+    <result column="itemState" property="itemState" jdbcType="DECIMAL" />
+    <result column="itemStateOther" property="itemStateOther" jdbcType="VARCHAR"/>
+    <result column="itemNeedMember" property="itemNeedMember" jdbcType="DECIMAL" />
+    <result column="itemCareNum" property="itemCareNum" jdbcType="DECIMAL" />
+    <result column="itemCareListID" property="itemCareListID" jdbcType="DECIMAL" />
+    <result column="itemLoveNum" property="itemLoveNum" jdbcType="DECIMAL" />
+    <result column="itemLoveListID" property="itemLoveListID" jdbcType="DECIMAL" />
+    <result column="itemTime" property="itemTime" jdbcType="DECIMAL" />
+  </resultMap>
+    <insert id="insertItem" parameterType="cn.ac.yangge.pojo.Item">
+       insert into item_info
+       (itemName,itemType,itemContent,itemContentID,itemLeader,itemTeam,itemState,itemStateOther,itemNeedMember,itemCareNum,itemCareListID,itemLoveNum,itemLoveListID,itemTime)
+       values(#{itemName},#{itemType},#{itemContent},#{itemContentID},#{itemLeader},#{itemTeam},#{itemState},#{itemStateOther},#{itemNeedMember},#{itemCareNum},#{itemCareListID},#{itemLoveNum},#{itemLoveListID},#{itemTime})
+    </insert>
+    <insert id="insertContent" useGeneratedKeys="true" keyProperty="itemContentID" parameterType="cn.ac.yangge.pojo.ItemContent">
+    	insert into item_content
+    	(itemContent) values (#{itemContent})
+    </insert>
+    <select id="getContent" parameterType="java.lang.Integer" resultType="cn.ac.yangge.pojo.ItemContent">
+    	select * from item_content where itemContentID=#{itemContentID}
+    </select>
+    <select id="getItemByID" resultType="cn.ac.yangge.pojo.Item" parameterType="java.lang.Integer">
+    	select * from item_info where itemID=#{itemID}
+    </select>
+     <select id="getItemByItemName" resultType="cn.ac.yangge.pojo.Item" parameterType="java.lang.String">
+    	select * from item_info where itemName=#{itemName}
+    </select>   
+    <select id="getItemList" resultType="cn.ac.yangge.pojo.Item">
+    	select * from item_info 
+    </select> 
+    <update id="updateItem" parameterType="cn.ac.yangge.pojo.Item">   
+    update item_info set
+    itemName=#{itemName},
+    itemType=#{itemType},
+    itemContent=#{itemContent},
+    itemContentID=#{itemContentID},
+    itemLeader=#{itemLeader},
+    itemTeam=#{itemTeam},
+    itemState=#{itemState},
+    itemStateOther=#{itemStateOther},
+    itemNeedMember=#{itemNeedMember},
+    itemCareNum=#{itemCareNum},
+    itemCareListID=#{itemCareListID},
+    itemLoveNum=#{itemLoveNum},
+    itemLoveListID=#{itemLoveListID},
+    itemTime=#{itemTime}
+    where itemID = #{itemID}
+    </update> 
+    <update id="addLoveNum" parameterType="cn.ac.yangge.pojo.ItemLoveDetail">
+    	update item_info set itemLoveNum=itemLoveNum+1 where itemID=#{itemID}
+    </update>
+    <update id="removeLoveNum" parameterType="cn.ac.yangge.pojo.ItemLoveDetail">
+    	update item_info set itemLoveNum=itemLoveNum-1 where itemID=#{itemID}
+    </update>
+    <update id="addCareNum" parameterType="cn.ac.yangge.pojo.ItemCareDetail">
+    	update item_info set itemCareNum=itemCareNum+1 where itemID=#{itemID}
+    </update>
+    <update id="removeCareNum" parameterType="cn.ac.yangge.pojo.ItemCareDetail">
+    	update item_info set itemCareNum=itemCareNum-1 where itemID=#{itemID}
+    </update>
+    <update id="updateContent" parameterType="cn.ac.yangge.pojo.ItemContent">
+    	update item_content set itemContent=#{itemContent} where itemContentID=#{itemContentID}
+    </update>
+    <delete id="deleteItemByID" parameterType="java.lang.Integer">   delete from item_info where itemID = #{itemID}</delete>
+</mapper>

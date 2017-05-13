@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ac.yangge.dao.ItemMemberStateDao">
+  <resultMap id="BaseResultMap" type="cn.ac.yangge.pojo.ItemMemberState" >
+    <id column="memberStateID" property="memberStateID" jdbcType="DECIMAL" />
+    <result column="memberNeedAndroid" property="memberNeedAndroid" jdbcType="DECIMAL" />
+	<result column="memberNeediOS" property="memberNeediOS" jdbcType="DECIMAL" />
+	<result column="memberNeedBack" property="memberNeedBack" jdbcType="DECIMAL" />
+	<result column="memberNeedWeb" property="memberNeedWeb" jdbcType="DECIMAL" />
+	<result column="memberNeedManager" property="memberNeedManager" jdbcType="DECIMAL" />
+	<result column="memberNeedOther" property="memberNeedOther" jdbcType="DECIMAL" />
+  </resultMap>
+    <insert id="insertMemberState" useGeneratedKeys="true" keyProperty="memberStateID" parameterType="cn.ac.yangge.pojo.ItemMemberState">
+       insert into item_member_state
+       (memberNeedAndroid,memberNeediOS,memberNeedBack,memberNeedWeb,memberNeedManager,memberNeedOther)
+       values(#{memberNeedAndroid},#{memberNeediOS},#{memberNeedBack},#{memberNeedWeb},#{memberNeedManager},#{memberNeedOther})
+    </insert>
+    <select id="getMemberState" resultType="cn.ac.yangge.pojo.ItemMemberState" parameterType="java.lang.Integer">
+    	select * from item_member_state where memberStateID=#{memberStateID}
+    </select>
+    <update id="updateMemberState" parameterType="cn.ac.yangge.pojo.ItemMemberState">   
+    update item_member_state set
+    memberNeedAndroid=#{memberNeedAndroid},
+    memberNeediOS=#{memberNeediOS},
+    memberNeedBack=#{memberNeedBack},
+    memberNeedWeb=#{memberNeedWeb},
+    memberNeedManager=#{memberNeedManger},
+    memberNeedOther=#{memberNeedOther}
+    where memberStateID = #{memberStateID }
+    </update> 
+    <delete id="deleteMemberState" parameterType="java.lang.Integer">delete from item_member_state where memberStateID = #{memberStateID}</delete>
+</mapper>

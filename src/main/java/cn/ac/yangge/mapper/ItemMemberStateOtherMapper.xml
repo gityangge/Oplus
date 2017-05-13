@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ac.yangge.dao.ItemMemberStateOtherDao">
+  <resultMap id="BaseResultMap" type="cn.ac.yangge.pojo.ItemMemberStateOther" >
+    <id column="memberStateOtherID" property="memberStateOtherID" jdbcType="DECIMAL" />
+    <result column="memberStateID" property="memberStateID" jdbcType="DECIMAL" />
+    <result column="memberStateContent" property="memberStateContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+    <insert id="insertMemberStateOther" useGeneratedKeys="true" keyProperty="memberStateOtherID" parameterType="cn.ac.yangge.pojo.ItemMemberStateOther">
+       insert into item_member_state_other
+       (memberStateContent)
+       value (#{memberStateContent})
+    </insert>
+    <select id="getMemberStateOther" resultType="cn.ac.yangge.pojo.ItemMemberStateOther" parameterType="java.lang.Integer">
+    	select * from item_member_state_other where memberStateOtherID=#{memberStateOtherID}
+    </select>
+    <update id="updateMemberStateOther" parameterType="cn.ac.yangge.pojo.ItemMemberStateOther">   
+    	update item_member_state_other set
+    	memberStateContent=#{memberStateContent}
+    	where memberStateOtherID = #{memberStateOtherID }
+    </update> 
+    <delete id="deleteMemberStateOther" parameterType="java.lang.Integer">   delete from item_member_state_other where memberStateOtherID = #{memberStateOtherID}</delete>
+</mapper>

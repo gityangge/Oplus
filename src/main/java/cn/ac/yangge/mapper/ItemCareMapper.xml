@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ac.yangge.dao.ItemCareDao">
+
+    <insert id="insertItemCare" useGeneratedKeys="true" keyProperty="careID" parameterType="cn.ac.yangge.pojo.ItemCare">
+       insert into item_care (whoCareList) values(#{whoCareList})
+    </insert>
+    <select id="getItemCare" resultType="cn.ac.yangge.pojo.ItemCare" parameterType="java.lang.Integer">
+    	select * from item_care where careID=#{careID}
+    </select>  
+    <update id="updateItemCare" parameterType="cn.ac.yangge.pojo.ItemCare">   
+    	update item_care set
+		whoCareList=#{whoCareList}
+		where careID = #{careID}
+    </update>
+    <insert id="insertItemCareDetail" parameterType="cn.ac.yangge.pojo.ItemCareDetail">
+       insert into item_care_detail (uniteID,itemID,careTime) values(#{uniteID},#{itemID},#{careTime})
+    </insert>
+    <select id="getCareDetail" resultType="cn.ac.yangge.pojo.ItemCareDetail" parameterType="cn.ac.yangge.pojo.ItemCareDetail">
+    	select * from item_care_detail where uniteID=#{uniteID} and itemID=#{itemID}
+    </select> 
+    <select id="getUserCareList" resultType="cn.ac.yangge.pojo.ItemCareDetail" parameterType="java.lang.Integer">
+    	select * from item_care_detail where uniteID=#{uniteID}
+    </select>  
+    <delete id="deleteItemCareDetail" parameterType="cn.ac.yangge.pojo.ItemCareDetail">
+       delete from item_care_detail where uniteID = #{uniteID} and itemID=#{itemID} 
+    </delete>
+</mapper>

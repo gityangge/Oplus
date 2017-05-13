@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ac.yangge.dao.ItemLoveDao">
+
+    <insert id="insertItemLove" useGeneratedKeys="true" keyProperty="loveID" parameterType="cn.ac.yangge.pojo.ItemLove">
+       insert into item_love (whoLoveList) values(#{whoLoveList})
+    </insert>
+    <select id="getItemLove" resultType="cn.ac.yangge.pojo.ItemLove" parameterType="java.lang.Integer">
+    	select * from item_love where loveID=#{loveID}
+    </select>  
+    <update id="updateItemLove" parameterType="cn.ac.yangge.pojo.ItemLove">   
+    	update item_love set
+		whoLoveList=#{whoLoveList}
+		where loveID = #{loveID}
+    </update>
+    <insert id="insertItemLoveDetail" parameterType="cn.ac.yangge.pojo.ItemLoveDetail">
+       insert into item_love_detail (uniteID,itemID,loveTime) values(#{uniteID},#{itemID},#{loveTime})
+    </insert>
+    <select id="getLoveDetail" resultType="cn.ac.yangge.pojo.ItemLoveDetail" parameterType="cn.ac.yangge.pojo.ItemLoveDetail">
+    	select * from item_love_detail where uniteID=#{uniteID} and itemID=#{itemID}
+    </select> 
+    <select id="getUserLoveList" resultType="cn.ac.yangge.pojo.ItemLoveDetail" parameterType="java.lang.String">
+    	select * from item_love_detail where uniteID=#{uniteID}
+    </select>  
+    <delete id="deleteItemLoveDetail" parameterType="cn.ac.yangge.pojo.ItemLoveDetail">   delete from item_love_detail where uniteID = #{uniteID} and itemID=#{itemID} </delete>
+</mapper>

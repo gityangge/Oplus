@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ac.yangge.dao.UserPowerDao">
+   <insert id="insertUserPower" parameterType="java.lang.String">
+      insert into user_power
+      (uniteID)
+      values(#{uniteID})
+   </insert>
+   <select id="findUserPower" resultType="cn.ac.yangge.pojo.UserPower" parameterType="java.lang.String">
+    	select * from user_power where uniteID=#{uniteID}
+    </select>
+    <update id="updateUserPower" parameterType="cn.ac.yangge.pojo.UserPower">
+    	update user_power set
+    	userPower=#{userPower},
+    	userActive=#{userActive}
+    	where 
+    	uniteID=#{uniteID}
+    </update>
+  </mapper>

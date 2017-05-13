@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ac.yangge.dao.TopicDao">
+<!--  love and care mapper -->
+   <insert id="addLove" useGeneratedKeys="true" keyProperty="topicLoveID" parameterType="cn.ac.yangge.pojo.TopicLove">
+      insert into topic_love
+      (loveUser,loveTopic,loveTime)
+      values(#{loveUser},#{loveTopic},#{loveTime})
+   </insert>
+   <insert id="addCare" useGeneratedKeys="true" keyProperty="topicCareID" parameterType="cn.ac.yangge.pojo.TopicCare">
+      insert into topic_care
+      (careUser,careTopic,careTime)
+      values(#{careUser},#{careTopic},#{careTime})
+   </insert>
+   <delete id="removeLove" parameterType="cn.ac.yangge.pojo.TopicLove">
+	    DELETE FROM topic_love WHERE loveUser=#{loveUser} AND loveTopic=#{loveTopic}
+   </delete>
+   <delete id="removeCare" parameterType="cn.ac.yangge.pojo.TopicCare">
+   		DELETE FROM topic_care 	WHERE careUser=#{careUser} AND careTopic=#{careTopic}
+   </delete>
+   <!-- 对用户的查询操作 -->
+   <select id="getCountLoveToTopic" resultType="java.lang.Integer" parameterType="cn.ac.yangge.pojo.TopicLove">
+    	SELECT COUNT(*) FROM topic_love WHERE loveUser=#{loveUser} AND loveTopic=#{loveTopic}
+    </select>
+    <select id="getCountCareToTopic" resultType="java.lang.Integer" parameterType="cn.ac.yangge.pojo.TopicCare">
+    	SELECT COUNT(*) FROM topic_care WHERE careUser=#{careUser} AND careTopic=#{careTopic}
+    </select>
+    <select id="getUserLoveList" resultType="java.lang.Integer" parameterType="java.lang.String">
+    	select loveTopic from topic_love where loveUser=#{loveUser}
+    </select>
+    <select id="getUserCareList" resultType="java.lang.Integer" parameterType="java.lang.String">
+    	select careTopic from topic_care where careUser=#{careUser}
+    </select>
+    <!-- end -->
+    
+    <update id="changeLoveNum" parameterType="cn.ac.yangge.pojo.Topic">
+    	update topic_info set
+    	topicLoveNum=topicLoveNum+#{topicLoveNum}
+    	where 
+    	topicID=#{topicID}
+    </update>
+    <update id="changeCareNum" parameterType="cn.ac.yangge.pojo.Topic">
+    	update topic_info set
+    	topicCareNum=topicCareNum+#{topicCareNum}
+    	where 
+    	topicID=#{topicID}
+    </update>
+<!-- init topic -->
+	<insert id="insertTopic" useGeneratedKeys="true" keyProperty="topicID" parameterType="cn.ac.yangge.pojo.Topic">
+		INSERT INTO topic_info
+		(topicName,topicText,topicTextID,topicFrom,topicLoveNum,topicCareNum,topicTime)
+		VALUES(#{topicName},#{topicText},#{topicTextID},#{topicFrom},#{topicLoveNum},#{topicCareNum},#{topicTime})
+	</insert>
+	<insert id="initTopicText" useGeneratedKeys="true" keyProperty="topicTextID" parameterType="cn.ac.yangge.pojo.Topic">
+		INSERT INTO topic_text
+		(topicText)VALUES(#{topicText})
+	</insert>
+<!-- get information -->
+	<select id="getTopicByID" resultType="cn.ac.yangge.pojo.Topic" parameterType="java.lang.Integer">
+		SELECT * FROM topic_info WHERE topicID=#{topicID}
+	</select>
+	<select id="getTopicByTopicName" resultType="cn.ac.yangge.pojo.Topic" parameterType="java.lang.String">
+		SELECT * FROM topic_info WHERE topicName=#{topicName}
+	</select>
+	<select id="getTopicList" resultType="cn.ac.yangge.pojo.Topic">
+		SELECT * FROM topic_info 
+	</select>
+	<select id="getTopicText" parameterType="java.lang.Integer" resultType="java.lang.String">
+		SELECT `topicText` FROM topic_text WHERE topicTextID=#{topicTextID}
+	</select>
+<!-- change topic state -->
+	<update id="updateTopic" parameterType="cn.ac.yangge.pojo.Topic">
+		UPDATE topic_info SET
+		topicName=#{topicName},
+		topicText=#{topicText}
+		WHERE topicID=#{topicID}
+	</update>
+	<delete id="deleteTopic" parameterType="java.lang.Integer">
+		DELETE FROM topic_info WHERE topicID=#{topicID}
+	</delete>
+	<update id="updateTopicText" parameterType="cn.ac.yangge.pojo.Topic">
+		UPDATE topic_text SET
+		topicText=#{topicText}
+		WHERE topicTextID=#{topicTextID}
+	</update>
+  </mapper>
